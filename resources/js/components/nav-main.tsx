@@ -17,26 +17,24 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
             <SidebarGroupLabel>Explorer</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => {
+                    const href = item.href;
                     const isExternal =
-                        typeof item.href === 'string' &&
-                        item.href.startsWith('http');
+                        typeof href === 'string' && href.startsWith('http');
 
                     return (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton
                                 asChild
-                                isActive={
-                                    !isExternal && isCurrentUrl(item.href)
-                                }
+                                isActive={!isExternal && isCurrentUrl(href)}
                                 tooltip={{ children: item.title }}
                             >
                                 {isExternal ? (
-                                    <a href={item.href}>
+                                    <a href={href}>
                                         {item.icon && <item.icon />}
                                         <span>{item.title}</span>
                                     </a>
                                 ) : (
-                                    <Link href={item.href} prefetch>
+                                    <Link href={href} prefetch>
                                         {item.icon && <item.icon />}
                                         <span>{item.title}</span>
                                     </Link>

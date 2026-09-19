@@ -12,8 +12,8 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
+import { dashboard } from '@/routes';
 
 type AccessibleSystem = {
     id: number;
@@ -34,19 +34,18 @@ const mainNavItems: NavItem[] = [
 ];
 
 export function AppSidebar() {
-    const { accessibleSystems } = usePage().props as {
-        accessibleSystems: AccessibleSystem[];
-    };
+    const accessibleSystemsProp = usePage().props.accessibleSystems;
+    const accessibleSystems = Array.isArray(accessibleSystemsProp)
+        ? (accessibleSystemsProp as AccessibleSystem[])
+        : [];
 
-    const systemNavItems: NavItem[] = (accessibleSystems ?? []).map(
-        (system) => ({
-            title: system.sys_name,
-            href: system.is_sso
-                ? `${window.location.origin}/sso/launch/${system.id}`
-                : system.sys_link,
-            icon: AppWindow,
-        }),
-    );
+    const systemNavItems: NavItem[] = accessibleSystems.map((system) => ({
+        title: system.sys_name,
+        href: system.is_sso
+            ? `${window.location.origin}/sso/launch/${system.id}`
+            : system.sys_link,
+        icon: AppWindow,
+    }));
 
     const navItems = [...mainNavItems, ...systemNavItems];
 

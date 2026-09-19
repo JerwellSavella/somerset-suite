@@ -1,19 +1,19 @@
 import { Head, usePage } from '@inertiajs/react';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import { dashboard } from '@/routes';
-import type { User } from '@/types';
-
 export default function Dashboard() {
-    const { auth } = usePage().props as {
-        auth: { user: User & { first_name: string } };
-    };
+    const { auth } = usePage().props;
+    const firstName =
+        typeof auth.user['first_name'] === 'string'
+            ? auth.user['first_name']
+            : auth.user.name;
 
     return (
         <>
             <Head title="Dashboard" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
                 <h1 className="text-lg font-semibold">
-                    WELCOME {auth.user.first_name} TO SOMERSET CONGREGATION!
+                    WELCOME {firstName} TO SOMERSET CONGREGATION!
                 </h1>
                 <div className="grid auto-rows-min gap-4 md:grid-cols-3">
                     <div className="relative aspect-video overflow-hidden rounded-xl border border-sidebar-border/70 dark:border-sidebar-border">
