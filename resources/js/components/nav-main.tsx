@@ -17,13 +17,17 @@ export function NavMain({ items = [] }: { items: NavItem[] }) {
             <SidebarGroupLabel>Explorer</SidebarGroupLabel>
             <SidebarMenu>
                 {items.map((item) => {
-                    const isExternal = typeof item.href === 'string' && item.href.startsWith('http');
+                    const isExternal =
+                        typeof item.href === 'string' &&
+                        item.href.startsWith('http');
 
                     return (
                         <SidebarMenuItem key={item.title}>
                             <SidebarMenuButton
                                 asChild
-                                isActive={!isExternal && isCurrentUrl(item.href)}
+                                isActive={
+                                    !isExternal && isCurrentUrl(item.href)
+                                }
                                 tooltip={{ children: item.title }}
                             >
                                 {isExternal ? (

@@ -21,7 +21,9 @@ export default function Login({ status, canResetPassword }: Props) {
             <Head title="Log in" />
 
             <div className="mb-6 text-center">
-                <h1 className="text-xl font-semibold">Welcome to Somerset Suite</h1>
+                <h1 className="text-xl font-semibold">
+                    Welcome to Somerset Suite
+                </h1>
                 <p className="mt-1 text-sm text-muted-foreground">
                     Log in with your email or phone number
                 </p>
@@ -72,7 +74,11 @@ export default function Login({ status, canResetPassword }: Props) {
                             <InputError message={errors.password} />
                         </div>
                         <div className="flex items-center space-x-3">
-                            <Checkbox id="remember" name="remember" tabIndex={3} />
+                            <Checkbox
+                                id="remember"
+                                name="remember"
+                                tabIndex={3}
+                            />
                             <Label htmlFor="remember">Remember me</Label>
                         </div>
                         <Button

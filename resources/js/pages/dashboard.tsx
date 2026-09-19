@@ -4,7 +4,9 @@ import { dashboard } from '@/routes';
 import type { User } from '@/types';
 
 export default function Dashboard() {
-    const { auth } = usePage().props as { auth: { user: User & { first_name: string } } };
+    const { auth } = usePage().props as {
+        auth: { user: User & { first_name: string } };
+    };
 
     return (
         <>

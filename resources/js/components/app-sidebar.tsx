@@ -38,13 +38,15 @@ export function AppSidebar() {
         accessibleSystems: AccessibleSystem[];
     };
 
-    const systemNavItems: NavItem[] = (accessibleSystems ?? []).map((system) => ({
-        title: system.sys_name,
-        href: system.is_sso
-            ? `${window.location.origin}/sso/launch/${system.id}`
-            : system.sys_link,
-        icon: AppWindow,
-    }));
+    const systemNavItems: NavItem[] = (accessibleSystems ?? []).map(
+        (system) => ({
+            title: system.sys_name,
+            href: system.is_sso
+                ? `${window.location.origin}/sso/launch/${system.id}`
+                : system.sys_link,
+            icon: AppWindow,
+        }),
+    );
 
     const navItems = [...mainNavItems, ...systemNavItems];
 
