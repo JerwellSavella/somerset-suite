@@ -25,7 +25,10 @@ type PageProps = {
 };
 
 function formatDate(date: string | null) {
-    if (!date) return '—';
+    if (!date) {
+return '—';
+}
+
     return new Date(date).toLocaleDateString('en-US', {
         year: 'numeric',
         month: 'long',
