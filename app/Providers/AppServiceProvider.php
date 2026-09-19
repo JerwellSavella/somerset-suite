@@ -2,13 +2,13 @@
 
 namespace App\Providers;
 
+use App\Auth\CustomUserProvider;
 use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Support\Facades\Auth;
-use App\Auth\CustomUserProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,7 +27,7 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->configureDefaults();
         Auth::provider('custom-eloquent', function ($app, array $config) {
-        return new CustomUserProvider($app['hash'], $config['model']);
+            return new CustomUserProvider($app['hash'], $config['model']);
         });
     }
 

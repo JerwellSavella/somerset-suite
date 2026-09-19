@@ -27,7 +27,9 @@ class User extends Authenticatable implements PasskeyUser
     use HasFactory, Notifiable, PasskeyAuthenticatable, TwoFactorAuthenticatable;
 
     protected $table = 'tbl_publisher_info';
+
     public $timestamps = false;
+
     protected $appends = ['name', 'email'];
 
     protected function casts(): array

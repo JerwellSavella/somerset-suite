@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
+use Illuminate\Validation\ValidationException;
 use Illuminate\Validation\Rules\Password;
 use Inertia\Inertia;
 use Laravel\Fortify\Features;
@@ -95,27 +96,27 @@ class FortifyServiceProvider extends ServiceProvider
      * Configure custom authentication (login by email or phone).
      */
     private function configureAuthentication(): void
-     {
-          Fortify::authenticateUsing(function (Request $request) {
-               $login = $request->input('email');
+    {
+        Fortify::authenticateUsing(function (Request $request) {
+            $login = $request->input('email');
 
-               $user = User::where('email_add', $login)
-                    ->orWhere('phone_num', $login)
-                    ->first();
+            $user = User::where('email_add', $login)
+                ->orWhere('phone_num', $login)
+                ->first();
 
-               if (! $user || ! Hash::check($request->input('password'), $user->password)) {
-                    return null;
-               }
+            if (! $user || ! Hash::check($request->input('password'), $user->password)) {
+                return null;
+            }
 
-               if (! $user->is_active) {
-                    throw \Illuminate\Validation\ValidationException::withMessages([
-                         'email' => 'This account has been deactivated. Please contact an administrator.',
-                    ]);
-               }
+            if (! $user->is_active) {
+                throw ValidationException::withMessages([
+                    'email' => 'This account has been deactivated. Please contact an administrator.',
+                ]);
+            }
 
-               return $user;
-          });
-     }
+            return $user;
+        });
+    }
 
     /**
      * Configure rate limiting.
