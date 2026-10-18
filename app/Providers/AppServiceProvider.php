@@ -9,6 +9,8 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Validation\Rules\Password;
 use Illuminate\Support\Facades\Auth;
 use App\Auth\CustomUserProvider;
+use App\Services\SystemFunctionService;
+use Illuminate\Support\Facades\View;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,6 +30,11 @@ class AppServiceProvider extends ServiceProvider
         $this->configureDefaults();
         Auth::provider('custom-eloquent', function ($app, array $config) {
         return new CustomUserProvider($app['hash'], $config['model']);
+        });
+        View::composer('layouts.app', function ($view) {
+            $view->with('systems', auth()->check()
+            ? SystemFunctionService::forPublisher(auth()->id())
+            : collect());
         });
     }
 
