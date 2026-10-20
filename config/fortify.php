@@ -178,7 +178,7 @@ return [
         // Features::twoFactorAuthentication([
         //    'confirm' => true,
         //    'confirmPassword' => true,
-            // 'window' => 0
+        //    'window' => 0,
         // ]),
         /* @end-chisel-2fa */
         /* @chisel-passkeys */

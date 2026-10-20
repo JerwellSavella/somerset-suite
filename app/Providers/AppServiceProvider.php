@@ -2,15 +2,15 @@
 
 namespace App\Providers;
 
-use Carbon\CarbonImmutable;
-use Illuminate\Support\Facades\Date;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Validation\Rules\Password;
-use Illuminate\Support\Facades\Auth;
 use App\Auth\CustomUserProvider;
 use App\Services\SystemFunctionService;
+use Carbon\CarbonImmutable;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\ServiceProvider;
+use Illuminate\Validation\Rules\Password;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -28,13 +28,15 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->configureDefaults();
+
         Auth::provider('custom-eloquent', function ($app, array $config) {
-        return new CustomUserProvider($app['hash'], $config['model']);
+            return new CustomUserProvider($app['hash'], $config['model']);
         });
+
         View::composer('layouts.app', function ($view) {
             $view->with('systems', auth()->check()
-            ? SystemFunctionService::forPublisher(auth()->id())
-            : collect());
+                ? SystemFunctionService::forPublisher(auth()->id())
+                : collect());
         });
     }
 
